@@ -6,7 +6,9 @@ mainAudio = wrapper.querySelector("#main-audio"),
 playPauseBtn = wrapper.querySelector(".play-pause"),
 prevBtn = wrapper.querySelector("#prev"),
 nextBtn = wrapper.querySelector("#next"),
+progressArea = wrapper.querySelector(".progress-area"),
 progressBar = wrapper.querySelector(".progress-bar")
+
 
 let musicIndex = 4
 
@@ -75,4 +77,37 @@ mainAudio.addEventListener('timeupdate', (e)=>{
     const duration = e.target.duration
     let progressWidth = (currentTime / duration) * 100
     progressBar.style.width = `${progressWidth}%`
+
+    let musicCurrentTime = wrapper.querySelector(".current"), musicDuration = wrapper.querySelector(".duration")
+    
+    mainAudio.addEventListener('loadeddata', ()=>{
+
+        // Atualização da duração total da música
+        let audioDuration = mainAudio.duration
+        let totalMin = Math.floor(audioDuration / 60)
+        let totalSec = Math.floor(audioDuration % 60)
+        if(totalSec < 10){
+            totalSec = `0${totalSec}`
+        }
+        musicDuration.innerText = `${totalMin}:${totalSec}`
+
+    })
+
+    // Atualização do tempo atual da música que está tocando
+    let currentMin = Math.floor(currentTime / 60)
+    let currentSec = Math.floor(currentTime % 60)
+    if(currentSec < 10){
+        currentSec = `0${currentSec}`
+    }
+    musicCurrentTime.innerText = `${currentMin}:${currentSec}`
+})
+
+progressArea.addEventListener("click", (e)=>{
+    let progressWidthval = progressArea.clientWidth
+    let clickedOffSetX = e.offsetX
+    let songDuration = mainAudio.duration
+
+    mainAudio.currentTime = (clickedOffSetX / progressWidthval) * songDuration
+
+    playMusic()
 })
