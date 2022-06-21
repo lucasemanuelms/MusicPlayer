@@ -5,7 +5,8 @@ musicArtist = wrapper.querySelector(".song-details .artist"),
 mainAudio = wrapper.querySelector("#main-audio"),
 playPauseBtn = wrapper.querySelector(".play-pause"),
 prevBtn = wrapper.querySelector("#prev"),
-nextBtn = wrapper.querySelector("#next")
+nextBtn = wrapper.querySelector("#next"),
+progressBar = wrapper.querySelector(".progress-bar")
 
 let musicIndex = 4
 
@@ -68,3 +69,10 @@ prevBtn.addEventListener("click", ()=>{
     prevMusic()
 })
 
+//Atualiza a barra de progresso de acordo com o tempo atual da música
+mainAudio.addEventListener('timeupdate', (e)=>{
+    const currentTime = e.target.currentTime
+    const duration = e.target.duration
+    let progressWidth = (currentTime / duration) * 100
+    progressBar.style.width = `${progressWidth}%`
+})
