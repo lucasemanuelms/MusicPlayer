@@ -133,3 +133,28 @@ repeatBtn.addEventListener("click", ()=>{
             break;
     }
 })
+
+mainAudio.addEventListener("ended", ()=>{
+    let getText = repeatBtn.innerText
+
+    switch(getText){
+        case "repeat": 
+            nextMusic()
+            break;
+        case "repeat_one":
+            mainAudio.currentTime = 0
+            loadMusic(musicIndex)
+            playMusic()
+            break;
+        case "shuffle":
+            let randIndex = Math.floor((Math.random()*allMusic.length) + 1)
+
+            do{
+                randIndex = Math.floor((Math.random()*allMusic.length) + 1)
+            }while(musicIndex == randIndex)
+            musicIndex = randIndex
+            loadMusic(musicIndex)
+            playMusic()
+            break;
+    }
+})
