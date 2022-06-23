@@ -78,7 +78,8 @@ mainAudio.addEventListener('timeupdate', (e)=>{
     let progressWidth = (currentTime / duration) * 100
     progressBar.style.width = `${progressWidth}%`
 
-    let musicCurrentTime = wrapper.querySelector(".current"), musicDuration = wrapper.querySelector(".duration")
+    let musicCurrentTime = wrapper.querySelector(".current"), 
+    musicDuration = wrapper.querySelector(".duration")
     
     mainAudio.addEventListener('loadeddata', ()=>{
 
@@ -110,4 +111,25 @@ progressArea.addEventListener("click", (e)=>{
     mainAudio.currentTime = (clickedOffSetX / progressWidthval) * songDuration
 
     playMusic()
+})
+
+const repeatBtn = wrapper.querySelector("#repeat-plist")
+
+repeatBtn.addEventListener("click", ()=>{
+    let getText = repeatBtn.innerText
+    
+    switch(getText){
+        case "repeat": 
+            repeatBtn.innerText = "repeat_one";
+            repeatBtn.setAttribute("title", "Song looped");
+            break;
+        case "repeat_one":
+            repeatBtn.innerText = "shuffle";
+            repeatBtn.setAttribute("title", "Playback shuffle");
+            break;
+        case "shuffle":
+            repeatBtn.innerText = "repeat";
+            repeatBtn.setAttribute("title", "Playlist looped");
+            break;
+    }
 })
